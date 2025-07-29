@@ -83,7 +83,7 @@ interface ApiService {
     suspend fun reportChannel(@Body dto: ChannelReportDto): Response<String>
 
     companion object {
-        private const val BASE_URL = "http://10.0.2.2:5114/"
+        private const val BASE_URL = "http://10.0.2.2:5161"
         val instance: ApiService by lazy {
             Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -99,9 +99,10 @@ interface ApiService {
         }
         //根据关键词寻找活动信息
         suspend fun searchActivities(keyword: String): List<Activity> {
-            val response = ApiService.instance.searchActivities(keyword)
-            return response.body() ?: emptyList()
+            val response = instance.searchActivities(keyword)
+            return if (response.isSuccessful) response.body() ?: emptyList() else emptyList()
         }
+
         //收藏活动
         suspend fun addFavoriteActivity(activityId: Int): String {
             val response = instance.addFavoriteActivity(activityId)

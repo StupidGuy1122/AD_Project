@@ -1,10 +1,14 @@
 package com.example.ad_project
 
 import android.os.Bundle
+import android.util.Log
+import android.util.Log.e
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +17,7 @@ import com.example.ad_project.data.Activity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class SearchResultFragment : Fragment() {
@@ -31,7 +36,7 @@ class SearchResultFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         // 获取传递的搜索关键词
-        val keywordList = arguments?.getStringArray("searchItemIdList")
+        val keywordList = arguments?.getStringArray("keyword")
         val keyword = keywordList?.firstOrNull() ?: ""
 
         // 加载搜索结果
@@ -41,10 +46,9 @@ class SearchResultFragment : Fragment() {
     }
 
     private fun loadSearchResults(keyword: String) {
-        GlobalScope.launch(Dispatchers.Main) {
-            activities = ApiService.searchActivities(keyword)  // 调用 API 搜索
+        lifecycleScope.launch {
+            val activities = ApiService.searchActivities(keyword)  // 网络请求在 IO 线程
             adapter = SearchAdapter(activities) { activity ->
-                // 点击跳转到详情页
                 val action = SearchResultFragmentDirections
                     .actionSearchResultFragmentToSearchDetailsFragment(activity.activityId)
                 findNavController().navigate(action)
@@ -52,4 +56,5 @@ class SearchResultFragment : Fragment() {
             recyclerView.adapter = adapter
         }
     }
+
 }

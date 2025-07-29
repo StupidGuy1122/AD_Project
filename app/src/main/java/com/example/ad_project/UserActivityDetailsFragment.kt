@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.ad_project.databinding.FragmentActivityDetailsBinding
 import kotlinx.coroutines.launch
 
@@ -50,7 +51,7 @@ class UserActivityDetailsFragment : Fragment() {
         }
 
         binding.exitActivityDetails.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
+            findNavController().popBackStack()
         }
     }
 

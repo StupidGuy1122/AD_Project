@@ -33,7 +33,7 @@ class UserActivitiesFragment : Fragment() {
         sharedViewModel.userId.observe(viewLifecycleOwner) { id ->
             userId = id
         }
-        userId = 1
+        userId = 3
         loadFavoriteActivities()
         binding.favoriteActivity.setOnClickListener {
             loadFavoriteActivities()

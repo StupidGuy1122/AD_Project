@@ -9,7 +9,5 @@ data class Activity(
     val endTime: String,
     val status: String,
     val createdBy: Int,
-    val creator: User?,
     val tags: List<Tag>,
-    val registeredUsers: List<User>
 )
