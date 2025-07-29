@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/userActivitiesFragment">
+
+    <!-- 底部导航栏跳转 -->
+    <action android:id="@+id/action_global_to_startFragment"
+        app:destination="@id/startFragment" />
+    <action android:id="@+id/action_global_to_channelListFragment"
+        app:destination="@id/channelListFragment" />
+    <action android:id="@+id/action_global_to_userActivitiesFragment"
+        app:destination="@id/userActivitiesFragment" />
+    <action android:id="@+id/action_global_to_profileFragment"
+        app:destination="@id/profileFragment" />
+
+    <!-- 主入口 -->
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.example.ad_project.StartFragment"
+        android:label="Start">
+        <!-- 顶部 Discover/Search -->
+        <action android:id="@+id/action_startFragment_to_discoverFragment"
+            app:destination="@id/discoverFragment" />
+        <action android:id="@+id/action_startFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <!-- 收件箱 -->
+        <action android:id="@+id/action_startFragment_to_inboxFragment"
+            app:destination="@id/inboxFragment" />
+    </fragment>
+
+    <!-- Discover -->
+    <fragment
+        android:id="@+id/discoverFragment"
+        android:name="com.example.ad_project.DiscoverFragment"
+        android:label="Discover" />
+
+    <!-- 搜索板块 -->
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.ad_project.SearchFragment"
+        android:label="Search">
+        <action
+            android:id="@+id/action_searchFragment_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.example.ad_project.SearchResultFragment"
+        android:label="Search Results">
+        <argument
+            android:name="keyword"
+            app:argType="string[]" />
+        <action
+            android:id="@+id/action_searchResultFragment_to_searchDetailsFragment"
+            app:destination="@id/searchDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchDetailsFragment"
+        android:name="com.example.ad_project.SearchDetailsFragment"
+        android:label="Search Details">
+        <argument
+            android:name="activityId"
+            app:argType="integer" />
+    </fragment>
+
+    <!-- Channel 板块 -->
+    <fragment
+        android:id="@+id/channelListFragment"
+        android:name="com.example.ad_project.ChannelListFragment"
+        android:label="Channel List">
+        <action
+            android:id="@+id/action_channelListFragment_to_channelDetailsFragment"
+            app:destination="@id/channelDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/channelDetailsFragment"
+        android:name="com.example.ad_project.ChannelDetailsFragment"
+        android:label="Channel Details">
+        <argument
+            android:name="channelId"
+            app:argType="integer" />
+    </fragment>
+
+    <!-- 个人活动板块 -->
+    <fragment
+        android:id="@+id/userActivitiesFragment"
+        android:name="com.example.ad_project.UserActivitiesFragment"
+        android:label="User Activities">
+        <action
+            android:id="@+id/action_userActivitiesFragment_to_activityDetails"
+            app:destination="@id/userActivityDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userActivityDetailsFragment"
+        android:name="com.example.ad_project.UserActivityDetailsFragment"
+        android:label="User Activity Details">
+        <argument
+            android:name="activityId"
+            app:argType="integer" />
+    </fragment>
+
+    <!-- 个人信息板块 -->
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.ad_project.ProfileFragment"
+        android:label="Profile" />
+
+    <!-- 收件箱板块 -->
+    <fragment
+        android:id="@+id/inboxFragment"
+        android:name="com.example.ad_project.InboxFragment"
+        android:label="Inbox">
+        <action
+            android:id="@+id/action_inboxFragment_to_messageDetailsFragment"
+            app:destination="@id/messageDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/messageDetailsFragment"
+        android:name="com.example.ad_project.MessageDetailsFragment"
+        android:label="Message Details">
+        <argument
+            android:name="messageId"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>

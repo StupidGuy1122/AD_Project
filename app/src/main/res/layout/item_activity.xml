@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/activityTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="活动标题"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/activityDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="活动描述"
+        android:textSize="14sp"
+        android:textColor="#444444"
+        android:paddingTop="4dp" />
+
+    <TextView
+        android:id="@+id/activityLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="活动地点"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:paddingTop="2dp" />
+
+    <TextView
+        android:id="@+id/activitystartTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开始时间"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:paddingTop="2dp" />
+
+    <TextView
+        android:id="@+id/activityendTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="结束时间"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:paddingTop="2dp" />
+</LinearLayout>
