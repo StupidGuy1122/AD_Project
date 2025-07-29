@@ -9,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -39,10 +40,16 @@ interface ApiService {
     @GET("api/Activity/activities/search")
     suspend fun searchActivities(@Query("keyword") keyword: String): Response<List<Activity>>
 
-    @GET("api/User/favorites")
+    @POST("api/Activity/activities/favourite/{activityId}")
+    suspend fun addFavoriteActivity(@Path("activityId") activityId: Int): Response<String>
+
+    @DELETE("api/Activity/activities/favourite/{activityId}")
+    suspend fun removeFavoriteActivity(@Path("activityId") activityId: Int): Response<String>
+
+    @GET("api/Activity/favorites")
     suspend fun getFavoriteActivities(): Response<List<Activity>>
 
-    @GET("api/User/passed")
+    @GET("api/Activity/registered")
     suspend fun getPassedActivities(): Response<List<Activity>>
 
     @GET("api/User/{id}")
@@ -77,7 +84,6 @@ interface ApiService {
 
     companion object {
         private const val BASE_URL = "http://10.0.2.2:5114/"
-
         val instance: ApiService by lazy {
             Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -86,55 +92,77 @@ interface ApiService {
                 .build()
                 .create(ApiService::class.java)
         }
-
+        //根据id获取活动信息
         suspend fun getActivityById(id: Int): Activity? {
             val response = ApiService.instance.getActivityById(id)
             return if (response.isSuccessful) response.body() else null
         }
+        //根据关键词寻找活动信息
         suspend fun searchActivities(keyword: String): List<Activity> {
             val response = ApiService.instance.searchActivities(keyword)
             return response.body() ?: emptyList()
         }
+        //收藏活动
+        suspend fun addFavoriteActivity(activityId: Int): String {
+            val response = instance.addFavoriteActivity(activityId)
+            return response.body() ?: "收藏失败"
+        }
+        //取消收藏活动
+        suspend fun removeFavoriteActivity(activityId: Int): String {
+            val response = instance.removeFavoriteActivity(activityId)
+            return response.body() ?: "取消收藏失败"
+        }
+        //获取用户收藏的活动
         suspend fun getFavoriteActivities(): List<Activity> {
             val response = ApiService.instance.getFavoriteActivities()
             return response.body() ?: emptyList()
         }
+        //获取用户准备参加的活动
         suspend fun getPassedActivities(): List<Activity> {
             val response = ApiService.instance.getPassedActivities()
             return response.body() ?: emptyList()
         }
+        //根据id获取用户信息
         suspend fun getUserById(userId: Int): User? {
             val response = ApiService.instance.getUserById(userId)
             return if (response.isSuccessful) response.body() else null
         }
+        //更新用户简介
         suspend fun updateUserProfile(dto: UpdateUserProfileDto): String {
             val response = ApiService.instance.updateProfile(dto)
             return response.body()?.message ?: "更新失败"
         }
+        //获取用户简介
         suspend fun getMyProfile(): UserProfile? {
             val response = ApiService.instance.getMyProfile()
             return response.body()
         }
+        //获取所有tag
         suspend fun getAllTags(): List<Tag> {
             val response = ApiService.instance.getAllTags()
             return response.body() ?: emptyList()
         }
+        //根据id获取tag
         suspend fun getTagById(tagId: Int): Tag? {
             val response = ApiService.instance.getTagById(tagId)
             return response.body()
         }
+        //获取profile内的tag
         suspend fun getTagsByProfile(profileId: Int): List<Tag> {
             val response = ApiService.instance.getTagsByProfile(profileId)
             return response.body() ?: emptyList()
         }
+        //获取活动所对应的tag
         suspend fun getTagsByActivity(activityId: Int): List<Tag> {
             val response = ApiService.instance.getTagsByActivity(activityId)
             return response.body() ?: emptyList()
         }
+        //加入某一频道
         suspend fun joinChannel(channelId: Int): String {
             val response = ApiService.instance.joinChannel(channelId)
             return response.body() ?: "加入失败"
         }
+        //举报某一频道
         suspend fun reportChannel(channelId: Int, content: String): String {
             val dto = ChannelReportDto(channelId, content)
             val response = ApiService.instance.reportChannel(dto)
