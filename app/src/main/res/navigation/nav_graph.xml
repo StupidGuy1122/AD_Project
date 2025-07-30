@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/searchFragment">
+    app:startDestination="@id/discoverFragment">
 
     <!-- 底部导航栏跳转 -->
     <action android:id="@+id/action_global_to_startFragment"
@@ -33,7 +33,11 @@
     <fragment
         android:id="@+id/discoverFragment"
         android:name="com.example.ad_project.DiscoverFragment"
-        android:label="Discover" />
+        android:label="Discover">
+        <action
+            android:id="@+id/action_discoverFragment_to_activityDetailsFragment"
+            app:destination="@id/ActivityDetailsFragment" />
+    </fragment>
 
     <!-- 搜索板块 -->
     <fragment
@@ -89,12 +93,12 @@
         android:label="User Activities">
         <action
             android:id="@+id/action_userActivitiesFragment_to_activityDetails"
-            app:destination="@id/userActivityDetailsFragment" />
+            app:destination="@id/ActivityDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/userActivityDetailsFragment"
-        android:name="com.example.ad_project.UserActivityDetailsFragment"
-        android:label="User Activity Details">
+        android:id="@+id/ActivityDetailsFragment"
+        android:name="com.example.ad_project.ActivityDetailsFragment"
+        android:label="Activity Details">
         <argument
             android:name="activityId"
             app:argType="integer" />

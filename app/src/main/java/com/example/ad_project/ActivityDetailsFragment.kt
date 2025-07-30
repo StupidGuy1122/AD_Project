@@ -11,7 +11,7 @@ import com.example.ad_project.databinding.FragmentActivityDetailsBinding
 import kotlinx.coroutines.launch
 
 
-class UserActivityDetailsFragment : Fragment() {
+class ActivityDetailsFragment : Fragment() {
     private var _binding: FragmentActivityDetailsBinding? = null
     private val binding get() = _binding!!
     private var activityId: Int = -1
@@ -39,8 +39,6 @@ class UserActivityDetailsFragment : Fragment() {
                     binding.activityTitle.text = activity.title
                     binding.activityDescription.text = activity.description
                     binding.activityStartTime.text = activity.startTime
-                    binding.activityEndTime.text = activity.endTime
-                    binding.activityStatus.text = activity.status
                 } else {
                     binding.activityTitle.text = "活动不存在"
                 }
@@ -53,6 +51,14 @@ class UserActivityDetailsFragment : Fragment() {
         binding.exitActivityDetails.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        var isFavorited = false
+
+        binding.favoriteButton.setOnClickListener {
+            isFavorited = !isFavorited
+            binding.favoriteButton.alpha = if (isFavorited) 1.0f else 0.4f
+        }
+
     }
 
     override fun onDestroyView() {

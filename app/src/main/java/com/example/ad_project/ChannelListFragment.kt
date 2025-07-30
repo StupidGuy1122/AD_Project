@@ -32,12 +32,24 @@ class ChannelListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 初始化适配器
-        channelAdapter = ChannelAdapter { channel ->
-            // 点击频道项跳转详情页
-            val action = ChannelListFragmentDirections
-                .actionChannelListFragmentToChannelDetailsFragment(channel.channelId)
-            findNavController().navigate(action)
-        }
+        channelAdapter = ChannelAdapter(
+            onItemClick = { channel ->
+                val action = ChannelListFragmentDirections
+                    .actionChannelListFragmentToChannelDetailsFragment(channel.channelId)
+                findNavController().navigate(action)
+            },
+            onJoinClick = { channel ->
+                lifecycleScope.launch {
+                    try {
+                        val result = ApiService.joinChannel(channel.channelId)
+                        Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
+                        channelAdapter.markAsJoined(channel.channelId)
+                    } catch (e: Exception) {
+                        Toast.makeText(context, "加入失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        )
 
         // 配置RecyclerView
         binding.channelsRecyclerView.apply {
@@ -56,12 +68,11 @@ class ChannelListFragment : Fragment() {
 
     private fun loadChannels() {
         binding.progressBar.visibility = View.VISIBLE
-
         lifecycleScope.launch {
             try {
                 // 调用ApiService获取频道列表（假设新增了getAllChannels接口）
-                val channels = ApiService.getAllChannels()
-                if (channels.isNotEmpty()) {
+                val channels = null //ApiService.getAllChannels()
+                if (false) {
                     channelAdapter.submitList(channels)
                     binding.emptyState.visibility = View.GONE
                 } else {

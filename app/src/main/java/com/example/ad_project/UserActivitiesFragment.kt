@@ -30,9 +30,6 @@ class UserActivitiesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        sharedViewModel.userId.observe(viewLifecycleOwner) { id ->
-            userId = id
-        }
         userId = 3
         loadFavoriteActivities()
         binding.favoriteActivity.setOnClickListener {

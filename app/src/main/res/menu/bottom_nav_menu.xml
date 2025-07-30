@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/discoverFragment"
+        android:title="Home" />
+    <item
+        android:id="@+id/userActivitiesFragment"
+        android:title="activity" />
+    <item
+        android:id="@+id/channelListFragment"
+        android:title="channel" />
+    <item
+        android:id="@+id/profileFragment"
+        android:title="me" />
+</menu>
